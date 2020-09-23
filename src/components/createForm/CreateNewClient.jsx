@@ -45,16 +45,28 @@ const CreateNewClient = ({createClient, getMeowFacts, meowFacts}) => {
     lastName: '',
     gender: '',
     cardNumber: '',
-    loyaltyProgram: '',
+    loyaltyProgram: 'Unavailable',
     registrationDate: ''
   });
   const regName = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
   const regGender = new RegExp(/^male$|^female$/);
-  const regCreditCard = new RegExp(/^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$/);
+  const visaPattern = new RegExp(/^(?:4[0-9]{12}(?:[0-9]{3})?)$/);
+  const mastPattern = new RegExp(/^(?:5[1-5][0-9]{14})$/);
+  const amexPattern = new RegExp(/^(?:3[47][0-9]{13})$/);
+  const discPattern = new RegExp(/^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/); 
+
   const isName = value => regName.test(value) ? null : 'Wrong entry, enter first name';
   const isLastName = value => regName.test(value) ? null : 'Wrong entry, enter last name';
   const isGender = value => regGender.test(value) ? null : 'Wrong entry, enter gender(male/female)';
-  const isCreditCard = value => regCreditCard.test(value) ? null : 'Wrong entry, enter credit card number';
+  const isCreditCard = value => {
+    const isVisa = visaPattern.test(value);
+    const isMast = mastPattern.test(value);
+    const isAmex = amexPattern.test(value);
+    const isDisc = discPattern.test(value);
+    return (isVisa || isMast || isAmex || isDisc) 
+      ? null
+      : 'Wrong entry, enter credit card number'
+  };
   const validatorsByField = {
     firstName: [isName],
     lastName: [isLastName],
@@ -119,7 +131,7 @@ const CreateNewClient = ({createClient, getMeowFacts, meowFacts}) => {
   }
   useEffect(()=> getMeowFacts(), [getMeowFacts]);
   return (
-      <form onSubmit={handleSubmit} className={classes.root} autocomplete="off">
+      <form onSubmit={handleSubmit} className={classes.root} autoComplete="off">
           <TextField 
             id="standard-basic"
             label="Enter first name"
@@ -157,11 +169,11 @@ const CreateNewClient = ({createClient, getMeowFacts, meowFacts}) => {
               value={user.cardNumber}
               onChange={onCreditCardNumberChange}
               maxLength="20"
-              autocomplete="nope"
+              autoComplete="off"
               required
             />
           }
-          {stateError.errorCreditCardNumber !== "" && <Typography variant="inherit" color="textSecondary" style={{color: "red", textAlign: "start"}}>{stateError.errorCreditCardNumber}</Typography>}
+          {user.loyaltyProgram === "Plastic card" && stateError.errorCreditCardNumber !== "" && <Typography variant="inherit" color="textSecondary" style={{color: "red", textAlign: "start"}}>{stateError.errorCreditCardNumber}</Typography>}
           <InputLabel style={{textAlign: "start", paddingTop: "20px", width: "94%"}}> Select loyalty program </InputLabel>
           <Select
             name="loyaltyProgram"
