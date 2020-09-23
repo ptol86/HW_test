@@ -12,16 +12,20 @@ import  store  from "./store";
 
 const useStyles = makeStyles({
   root: {
-    background: 'linear-gradient(to right, rgb(22, 34, 42) 0%, rgb(58, 96, 115) 51%, rgb(22, 34, 42) 100%)',
+    background: 'linear-gradient(to right, #314755 0%, #26a0da  51%, #314755  100%)',
     border: 0,
     borderRadius: 3,
     boxShadow: '0 3px 5px 2px rgba(218, 220, 224)',
     height: 48,
+    transition: "0.5s",
+    backgroundSize: "200% auto",
     width: "70%",
     marginBottom: ".5rem",
     padding: '0 30px',
     '&:hover': {
-      opacity: ".9",
+      backgroundPosition: "right center",
+      color: "#fff",
+      textDecoration: "none",
     }
     
   },

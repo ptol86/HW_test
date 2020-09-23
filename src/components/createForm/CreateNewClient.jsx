@@ -30,16 +30,45 @@ const CreateNewClient = ({createClient, getMeowFacts, meowFacts}) => {
     firstName: '',
     lastName: '',
     gender: '',
+    cardNumber: '',
     loyaltyProgram: 'Unavailable',
     registrationDate: Date.now(),
   });
+  const [stateError, setUpdateStateError] = useState({
+    errorFirstName: '',
+    errorLastName: '',
+    errorGender: '',
+    errorCreditCardNumber: '',
+  })
   const clearInputs = () => setUser({
     firstName: '',
     lastName: '',
     gender: '',
+    cardNumber: '',
     loyaltyProgram: '',
     registrationDate: ''
   });
+  const regName = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
+  const regGender = new RegExp(/^male$|^female$/);
+  const regCreditCard = new RegExp(/^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$/);
+  const isName = value => regName.test(value) ? null : 'Wrong entry, enter first name';
+  const isLastName = value => regName.test(value) ? null : 'Wrong entry, enter last name';
+  const isGender = value => regGender.test(value) ? null : 'Wrong entry, enter gender(male/female)';
+  const isCreditCard = value => regCreditCard.test(value) ? null : 'Wrong entry, enter credit card number';
+  const validatorsByField = {
+    firstName: [isName],
+    lastName: [isLastName],
+    gender: [isGender],
+    cardNumber: [isCreditCard],
+  }
+  const validate = (fieldName, value) => {
+    const validators = validatorsByField[fieldName];
+    return validators
+      .map(validator => validator(value))
+      .filter(errorText => errorText)
+      .join(',');
+  }
+  
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUser({
@@ -47,43 +76,92 @@ const CreateNewClient = ({createClient, getMeowFacts, meowFacts}) => {
       [name]: value,
     });
   };
+  const onNameChange = e => {
+    e.preventDefault();
+    const errorText = validate(e.target.name, e.target.value)
+    handleChange(e);
+    setUpdateStateError({
+      ...stateError,
+      errorFirstName: errorText, 
+    });
+  }
+  const onLastNameChange = e => {
+    e.preventDefault();
+    const errorText = validate(e.target.name, e.target.value)
+    handleChange(e);
+    setUpdateStateError({
+      ...stateError,
+      errorLastName: errorText, 
+    });
+  }
+  const onGenderChange = e => {
+    e.preventDefault();
+    const errorText = validate(e.target.name, e.target.value)
+    handleChange(e);
+    setUpdateStateError({
+      ...stateError,
+      errorGender: errorText, 
+    });
+  }
+  const onCreditCardNumberChange = e => {
+    e.preventDefault();
+    const errorText = validate(e.target.name, e.target.value)
+    handleChange(e);
+    setUpdateStateError({
+      ...stateError,
+      errorCreditCardNumber: errorText, 
+    });
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
     createClient(user);
     clearInputs();
   }
-  
   useEffect(()=> getMeowFacts(), [getMeowFacts]);
-
   return (
-      <form onSubmit={handleSubmit} className={classes.root}>
+      <form onSubmit={handleSubmit} className={classes.root} autocomplete="off">
           <TextField 
             id="standard-basic"
             label="Enter first name"
             name="firstName"
             value={user.firstName}
-            onChange={handleChange}
+            onChange={onNameChange}
             maxLength="20"
             required
           />
+          {stateError.errorFirstName !== "" && <Typography variant="inherit" color="textSecondary" style={{color: "red", textAlign: "start"}}>{stateError.errorFirstName}</Typography>}
           <TextField 
             id="standard-basic"
             label="Enter last name"
             name="lastName"
             value={user.lastName}
-            onChange={handleChange}
+            onChange={onLastNameChange}
             maxLength="20"
             required
           />
+          {stateError.errorLastName !== "" && <Typography variant="inherit" color="textSecondary" style={{color: "red", textAlign: "start"}}>{stateError.errorLastName}</Typography>}
           <TextField 
             id="standard-basic"
             label="Choose the gender"
             name="gender"
             value={user.gender}
-            onChange={handleChange}
+            onChange={onGenderChange}
             maxLength="20"
             required
           />
+          {stateError.errorGender !== "" && <Typography variant="inherit" color="textSecondary" style={{color: "red", textAlign: "start"}}>{stateError.errorGender}</Typography>}
+          {user.loyaltyProgram === "Plastic card" && <TextField 
+              id="standard-basic"
+              label="Enter card number"
+              name="cardNumber"
+              value={user.cardNumber}
+              onChange={onCreditCardNumberChange}
+              maxLength="20"
+              autocomplete="nope"
+              required
+            />
+          }
+          {stateError.errorCreditCardNumber !== "" && <Typography variant="inherit" color="textSecondary" style={{color: "red", textAlign: "start"}}>{stateError.errorCreditCardNumber}</Typography>}
           <InputLabel style={{textAlign: "start", paddingTop: "20px", width: "94%"}}> Select loyalty program </InputLabel>
           <Select
             name="loyaltyProgram"
@@ -96,6 +174,7 @@ const CreateNewClient = ({createClient, getMeowFacts, meowFacts}) => {
             <MenuItem value="Plastic card" disableGutters>Plastic card</MenuItem>
             <MenuItem value="Mobile application" disableGutters>Mobile application</MenuItem>
           </Select>
+          
         <div style={{
               "display": "flex",
               "justifyContent": "space-between",
