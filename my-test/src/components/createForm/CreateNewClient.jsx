@@ -12,10 +12,8 @@ import * as ClientsActions from "../redux/clients/clients.actions";
 import * as MeowActions from "../redux/meowFacts/meowFacts.actions";
 import { meowFactsSelector } from "../redux/meowFacts/meowFacts.selectors";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "35ch",
     display: "flex",
     flexDirection: "column",
     textAlign: "center",
@@ -86,17 +84,17 @@ const CreateNewClient = ({createClient, getMeowFacts, meowFacts}) => {
             maxLength="20"
             required
           />
-          <InputLabel style={{textAlign: "start"}}> Select loyalty program </InputLabel>
+          <InputLabel style={{textAlign: "start", paddingTop: "20px", width: "94%"}}> Select loyalty program </InputLabel>
           <Select
             name="loyaltyProgram"
             value={user.loyaltyProgram}
             onChange={handleChange}
             required
-            style={{textAlign: "start", color: "rgba(0, 0, 0, 0.54)"}}
+            style={{textAlign: "start", color: "rgba(0, 0, 0, 0.54)", width: "94%"}}
           >
-            <MenuItem value="Unavailable">Unavailable</MenuItem>
-            <MenuItem value="Plastic card">Plastic card</MenuItem>
-            <MenuItem value="Mobile application">Mobile application</MenuItem>
+            <MenuItem value="Unavailable" disableGutters>Unavailable</MenuItem>
+            <MenuItem value="Plastic card" disableGutters>Plastic card</MenuItem>
+            <MenuItem value="Mobile application" disableGutters>Mobile application</MenuItem>
           </Select>
         <div style={{
               "display": "flex",

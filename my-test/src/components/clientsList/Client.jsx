@@ -22,8 +22,8 @@ const Client = ({firstName, lastName, registrationDate}) => {
             <ListItemIcon style={{minWidth: "24px", marginBottom: "30px"}}>
               <PermIdentityIcon />
             </ListItemIcon>
-            <span>{`${firstName} ${lastName}`}</span>
-            <p >{`Registered ${format(registrationDate, 'MM-dd-yyyy (hh-mm a)')}`}</p>
+            <h3>{`${firstName} ${lastName}`}</h3>
+            <h4>{`Registered ${format(registrationDate, 'MM-dd-yyyy (hh-mm a)')}`}</h4>
         </ListItem>
     )
     

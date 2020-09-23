@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter, Route, Switch, Link} from "react-router-dom";
+import {BrowserRouter, Route, Switch, NavLink} from "react-router-dom";
 import Author from "./components/author/Author";
 import ClientsList from "./components/clientsList/ClientsList";
 import CreateNewClient from "./components/createForm/CreateNewClient";
@@ -12,15 +12,18 @@ import  store  from "./store";
 
 const useStyles = makeStyles({
   root: {
-    background: 'linear-gradient(45deg, grey 30%, black 90%)',
+    background: 'linear-gradient(to right, rgb(22, 34, 42) 0%, rgb(58, 96, 115) 51%, rgb(22, 34, 42) 100%)',
     border: 0,
     borderRadius: 3,
     boxShadow: '0 3px 5px 2px rgba(218, 220, 224)',
-    color: 'black',
     height: 48,
     width: "70%",
     marginBottom: ".5rem",
     padding: '0 30px',
+    '&:hover': {
+      opacity: ".9",
+    }
+    
   },
 });
 
@@ -29,7 +32,7 @@ function App() {
   const deleteUnderlining = {
     width: "100%",
     textDecoration: "none",
-    color: "white"
+    color: "rgba(255, 255, 255, 1)"
   };
   const containerStyles = {   
       width: "100vw",
@@ -50,9 +53,9 @@ function App() {
       <Container maxWidth="sm" style={containerStyles}>
         <BrowserRouter> 
           <List style={navigation}>
-            <Button className={classes.root}><Link style={deleteUnderlining} to="/clients-list">Clients List</Link></Button>
-            <Button className={classes.root}><Link style={deleteUnderlining} to="/author">Author</Link></Button>
-            <Button className={classes.root}><Link style={deleteUnderlining} to="/create-new-client">Create new client</Link></Button>
+            <Button className={classes.root} ><NavLink style={deleteUnderlining} activeStyle={{fontWeight: "bold", color: "rgba(185, 172, 172, 1)"}} to="/clients-list">Clients List</NavLink></Button>
+            <Button className={classes.root} ><NavLink style={deleteUnderlining} activeStyle={{fontWeight: "bold", color: "rgba(185, 172, 172, 1)" }} to="/create-new-client">Create new client</NavLink></Button>
+            <Button className={classes.root} ><NavLink style={deleteUnderlining} activeStyle={{fontWeight: "bold", color: "rgba(185, 172, 172, 1)" }} to="/author">Author</NavLink></Button>
           </List>
           <Switch>
             <Route exact path="/clients-list" component={ClientsList}></Route>

@@ -10,7 +10,7 @@ const ClientsList = ({clients, getClientsList}) => {
       getClientsList()
     }, [])
     return (
-        <List>
+        <List style={{color: "rgba(0, 0, 0, 0.54)"}}>
             {clients.map(client => (
                 <Client 
                 key={client.id} 
