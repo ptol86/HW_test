@@ -8,7 +8,7 @@ import * as ClientsActions from "../redux/clients/clients.actions";
 const ClientsList = ({clients, getClientsList}) => {
     useEffect(()=>{
       getClientsList()
-    }, [])
+    }, [getClientsList])
     return (
         <List style={{color: "rgba(0, 0, 0, 0.54)"}}>
             {clients.map(client => (

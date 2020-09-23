@@ -53,7 +53,7 @@ const CreateNewClient = ({createClient, getMeowFacts, meowFacts}) => {
     clearInputs();
   }
   
-  useEffect(()=> getMeowFacts(), []);
+  useEffect(()=> getMeowFacts(), [getMeowFacts]);
 
   return (
       <form onSubmit={handleSubmit} className={classes.root}>

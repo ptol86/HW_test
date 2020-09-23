@@ -16,12 +16,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const Author = ({getAuthorData, authorData}) => {
   const classes = useStyles();
   useEffect(() => {
     getAuthorData();
-  }, []);
+  }, [getAuthorData]);
   return (
     <>
     <div className={classes.root}>
