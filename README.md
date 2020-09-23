@@ -8,13 +8,13 @@ npm start
 
 The tech stack is:
 
-HTML5 
-CSS3 
-ES6 
-React 
-React-router-dom 
-Redux 
-Redux-thunk 
-REST API 
+HTML5/
+CSS3/ 
+ES6/ 
+React/ 
+React-router-dom/ 
+Redux/
+Redux-thunk/ 
+REST API/ 
 date-fns
 
