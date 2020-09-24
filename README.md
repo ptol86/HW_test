@@ -15,6 +15,7 @@ React/
 React-router-dom/ 
 Redux/
 Redux-thunk/ 
-REST API/ 
+REST API/
+Material-ui/
 date-fns
 
