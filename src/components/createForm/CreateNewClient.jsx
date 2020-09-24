@@ -49,7 +49,7 @@ const CreateNewClient = ({createClient, getMeowFacts, meowFacts}) => {
     registrationDate: ''
   });
   const regName = new RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/);
-  const regGender = new RegExp(/^male$|^female$/);
+  const regGender = new RegExp(/^male$|^female$|Male$|^Female$/);
   const visaPattern = new RegExp(/^(?:4[0-9]{12}(?:[0-9]{3})?)$/);
   const mastPattern = new RegExp(/^(?:5[1-5][0-9]{14})$/);
   const amexPattern = new RegExp(/^(?:3[47][0-9]{13})$/);
@@ -154,11 +154,11 @@ const CreateNewClient = ({createClient, getMeowFacts, meowFacts}) => {
           {stateError.errorLastName !== "" && <Typography variant="inherit" color="textSecondary" style={{color: "red", textAlign: "start"}}>{stateError.errorLastName}</Typography>}
           <TextField 
             id="standard-basic"
-            label="Choose the gender"
+            label="Enter the gender"
             name="gender"
             value={user.gender}
             onChange={onGenderChange}
-            maxLength="20"
+            maxLength="6"
             required
           />
           {stateError.errorGender !== "" && <Typography variant="inherit" color="textSecondary" style={{color: "red", textAlign: "start"}}>{stateError.errorGender}</Typography>}
@@ -171,6 +171,7 @@ const CreateNewClient = ({createClient, getMeowFacts, meowFacts}) => {
               maxLength="20"
               autoComplete="off"
               required
+              placeholder="●●●● ●●●● ●●●● ●●●●"
             />
           }
           {user.loyaltyProgram === "Plastic card" && stateError.errorCreditCardNumber !== "" && <Typography variant="inherit" color="textSecondary" style={{color: "red", textAlign: "start"}}>{stateError.errorCreditCardNumber}</Typography>}
@@ -182,7 +183,7 @@ const CreateNewClient = ({createClient, getMeowFacts, meowFacts}) => {
             required
             style={{textAlign: "start", color: "rgba(0, 0, 0, 0.54)", width: "94%"}}
           >
-            <MenuItem value="Unavailable" disableGutters>Unavailable</MenuItem>
+            <MenuItem value="Unavailable" disableGutters >Unavailable</MenuItem>
             <MenuItem value="Plastic card" disableGutters>Plastic card</MenuItem>
             <MenuItem value="Mobile application" disableGutters>Mobile application</MenuItem>
           </Select>
